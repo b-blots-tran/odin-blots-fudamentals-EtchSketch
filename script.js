@@ -5,7 +5,11 @@ function createRow() {
   let rowContainer = document.createElement("div");
   rowContainer.classList.add("grid-item");
   rowContainer.addEventListener("mouseover", (e) => {
-    e.target.classList.add("filled");
+    let passes = e.target.getAttribute("data-passes");
+    if (passes < 10) {
+      e.target.style.backgroundColor = `rgba(0, 0, 0, ${passes / 10})`;
+      e.target.setAttribute("data-passes", `${++passes}`);
+    }
   });
   return rowContainer;
 }
