@@ -1,14 +1,25 @@
 let numRows = 16;
 let numCols = 16;
-
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 function createRow() {
   let rowContainer = document.createElement("div");
   rowContainer.classList.add("grid-item");
   rowContainer.addEventListener("mouseover", (e) => {
     let passes = e.target.getAttribute("data-passes");
-    if (passes < 10) {
-      e.target.style.backgroundColor = `rgba(0, 0, 0, ${passes / 10})`;
+    let currentColor = e.target.style.backgroundColor;
+    if (currentColor == "") {
+      e.target.style.backgroundColor = `rgba(${getRandomInt(
+        256
+      )}, ${getRandomInt(256)}, ${getRandomInt(256)}, 0.1)`;
       e.target.setAttribute("data-passes", `${++passes}`);
+    } else {
+      if (passes < 10) {
+        currentColor = currentColor.slice(0, currentColor.length - 4);
+        e.target.style.backgroundColor = currentColor + `${passes / 10})`;
+        e.target.setAttribute("data-passes", `${++passes}`);
+      }
     }
   });
   return rowContainer;
